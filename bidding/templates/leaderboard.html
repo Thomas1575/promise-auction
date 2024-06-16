@@ -1,0 +1,34 @@
+{% extends "nav_buttons_base.html" %}
+
+{% block below_nav_buttons %}
+  <div class="m-2">
+    <h1 class="primary-colour">{{ auction_setting.auction_name }} Leaderboard</h2>
+    {% if auction_setting.leaderboard_spaces %}<p class="text-muted">Showing the highest {{ auction_setting.leaderboard_spaces }} bidders.</p>{% endif %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Spend</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Items</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i, bidder in leaderboard_dict.items %}
+          <tr{% if bidder.promises_count == highest_promise_count %} class="table-success"  data-toggle="tooltip" data-placement="bottom" title="Quantity award"{% endif %}>
+            <th scope="row">{{ bidder.name }}</th>
+            <td>£{{ bidder.total_spend }}</td>
+            <td>{{ bidder.promises_count }}</td>
+            <td>{{ bidder.won_items }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <h3>Total raised: <b class="text-success">£{{ total_raised }}</b></h3>
+  </div>
+
+  <script>
+      $("#nav_leaderboard").addClass("active")
+      $('[data-toggle="tooltip"]').tooltip();
+  </script>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a onclick="navigateToURL(`{% url 'bidding' %}`)" href="#" role="button" class="navbar-brand">{{ auction_setting.auction_name }}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" id="nav_bidding">
+                    <a onclick="navigateToURL(`{% url 'bidding' %}`)" href="#" role="button" class="nav-link" oncontextmenu="return false">Start Bidding</a>
+                </li>
+                {% if auction_setting.enable_leaderboard %}
+                    <li class="nav-item" id="nav_leaderboard">
+                        <a onclick="navigateToURL(`{% url 'leaderboard' %}`)" href="#" role="button" class="nav-link" oncontextmenu="return false">View Leaderboard</a>
+                    </li>
+                {% endif %}
+                {% if request.user.is_superuser %}
+                    <li class="nav-item" id="nav_admin_panel">
+                        <a onclick="navigateToURL(`{% url 'admin_panel' %}`)" href="#" role="button" class="nav-link" oncontextmenu="return false">Admin Panel</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    {% block below_nav_buttons %}{% endblock %}
+    <script>
+        function navigateToURL(url) {
+            var name_input = $("#name")
+            if (name_input.length) {
+                url += "?name=" + name_input.val()
+            }
+            else {
+                url += "?name={{ name }}"
+            }
+            var phone_number_input = $("#phone_number")
+            if (phone_number_input.length) {
+                url += "&phone_number=" + phone_number_input.val()
+            }
+            else {
+                url += "&phone_number={{ phone_number }}"
+            }
+            window.location.href = url
+        }
+    </script>
+{% endblock %}

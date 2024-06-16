@@ -1,0 +1,12 @@
+{% extends "nav_buttons_base.html" %}
+
+{% block below_nav_buttons %}
+  <div class="m-2">
+    <h1 class="primary-colour">Welcome to the {{ auction_setting.auction_name }}!</h1>
+    <form action="" method="post">
+      {% csrf_token %}
+      {% include "user_details.html" %}
+      <input class="btn btn-primary w-100" type="submit" value="Join Auction">
+    </form>
+  </div>
+{% endblock %}
